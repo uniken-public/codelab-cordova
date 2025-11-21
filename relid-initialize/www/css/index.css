@@ -1,0 +1,412 @@
+/**
+ * REL-ID Tutorial Styles
+ * Cordova implementation of React Native design
+ */
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none;
+    font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8fafc;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc;
+}
+
+/* Header Styles */
+.header {
+    background-color: #2563eb;
+    padding: 48px 24px 24px 24px;
+    text-align: center;
+}
+
+.header.success-header {
+    background-color: #16a34a;
+}
+
+.header.error-header {
+    background-color: #dc2626;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #bfdbfe;
+    margin: 0;
+}
+
+.success-header .subtitle {
+    color: #bbf7d0;
+}
+
+.error-header .subtitle {
+    color: #fecaca;
+}
+
+/* Card Styles */
+.card {
+    background-color: #ffffff;
+    margin: 16px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 16px 0;
+}
+
+/* Info Row Styles */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.info-label {
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* Tutorial Steps */
+.step-container {
+    margin-top: 8px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: #2563eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.step-number-text {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.step-text {
+    flex: 1;
+    font-size: 16px;
+    color: #4b5563;
+}
+
+/* Button Styles */
+.button-container {
+    margin: 16px;
+}
+
+.initialize-button {
+    background-color: #16a34a;
+    padding: 16px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.initialize-button.initializing {
+    background-color: #9ca3af;
+}
+
+.initialize-button:disabled {
+    cursor: not-allowed;
+}
+
+/* Progress Container */
+.progress-container {
+    margin: 16px;
+    padding: 16px;
+    background-color: #eff6ff;
+    border-radius: 8px;
+    border-left: 4px solid #2563eb;
+}
+
+.progress-text {
+    font-size: 16px;
+    color: #1e40af;
+    font-weight: 500;
+    text-align: center;
+    line-height: 22px;
+    margin: 0;
+    white-space: pre-line;
+}
+
+/* Footer */
+.footer {
+    margin: 16px;
+    padding: 16px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+}
+
+.footer-text {
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+    line-height: 20px;
+    margin: 0;
+}
+
+/* Success Card Styles */
+.success-card {
+    border-left: 4px solid #16a34a;
+}
+
+.success-header-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.success-badge {
+    background-color: #16a34a;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 12px;
+}
+
+.success-badge-text {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.success-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    flex: 1;
+}
+
+.success-description {
+    background-color: #f0fdf4;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.description-text {
+    font-size: 14px;
+    color: #166534;
+    line-height: 20px;
+    margin: 0;
+}
+
+/* Session Details */
+.session-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.session-label {
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.session-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    font-family: 'Courier New', monospace;
+}
+
+.session-container {
+    margin-top: 8px;
+}
+
+.session-id-container {
+    background-color: #f3f4f6;
+    padding: 6px 12px;
+    border-radius: 6px;
+    flex: 1;
+    margin-left: 12px;
+}
+
+.session-id-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+}
+
+.status-code-text {
+    font-size: 16px;
+    color: #166534;
+    font-family: 'Courier New', monospace;
+}
+
+/* Next Steps */
+.next-steps-container {
+    margin-top: 8px;
+}
+
+.next-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.step-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: #eff6ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.next-step-text {
+    flex: 1;
+    font-size: 16px;
+    color: #4b5563;
+}
+
+/* Error Card Styles */
+.error-card {
+    border-left: 4px solid #dc2626;
+}
+
+.error-header-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.severity-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 12px;
+    background-color: #dc2626;
+}
+
+.severity-text {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.error-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    flex: 1;
+}
+
+.error-description {
+    background-color: #fef2f2;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.error-description .description-text {
+    color: #7f1d1d;
+}
+
+/* Error Codes */
+.code-container {
+    margin-top: 8px;
+}
+
+.code-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.code-label {
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.code-value {
+    background-color: #f3f4f6;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.code-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    font-family: 'Courier New', monospace;
+}
+
+/* Troubleshooting */
+.troubleshooting-container {
+    margin-top: 8px;
+}
+
+.troubleshooting-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.step-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #2563eb;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.troubleshooting-text {
+    flex: 1;
+    font-size: 16px;
+    color: #4b5563;
+}

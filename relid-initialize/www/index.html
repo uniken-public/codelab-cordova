@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <title>REL-ID Integration Tutorial - Cordova SPA</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <!-- ========== SPA CONTENT CONTAINER (Dynamic) ========== -->
+    <!-- Screen templates loaded here by NavigationService -->
+    <div id="app-content"></div>
+
+    <!-- ========== SCREEN TEMPLATES (Hidden, loaded on demand) ========== -->
+
+    <!-- Template: Tutorial Home Screen -->
+    <template id="TutorialHome-template">
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <h1 class="title">REL-ID Integration Tutorial</h1>
+                <p class="subtitle">Learn cordova-plugin-rdna Integration</p>
+            </div>
+
+            <!-- SDK Info Card -->
+            <div class="card">
+                <h2 class="card-title">SDK Information</h2>
+                <div class="info-row">
+                    <span class="info-label">SDK Version:</span>
+                    <span class="info-value" id="sdk-version">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Platform:</span>
+                    <span class="info-value">Cordova</span>
+                </div>
+            </div>
+
+            <!-- Tutorial Steps Card -->
+            <div class="card">
+                <h2 class="card-title">Tutorial Steps</h2>
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">
+                            <span class="step-number-text">1</span>
+                        </div>
+                        <span class="step-text">Click "Initialize" to start the initialization</span>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">
+                            <span class="step-number-text">2</span>
+                        </div>
+                        <span class="step-text">Watch the initialization progress</span>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">
+                            <span class="step-number-text">3</span>
+                        </div>
+                        <span class="step-text">View the result on completion</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Initialize Button -->
+            <div class="button-container">
+                <button class="initialize-button" id="initialize-btn">Initialize</button>
+            </div>
+
+            <!-- Progress Message -->
+            <div class="progress-container" id="progress-container" style="display: none;">
+                <p class="progress-text" id="progress-text">RDNA initialization in progress...</p>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p class="footer-text">
+                    This tutorial demonstrates cordova-plugin-rdna initialization with real-time progress tracking
+                </p>
+            </div>
+        </div>
+    </template>
+
+    <!-- Template: Tutorial Success Screen -->
+    <template id="TutorialSuccess-template">
+        <div class="container">
+            <!-- Header -->
+            <div class="header success-header">
+                <h1 class="title">Initialization Success!</h1>
+                <p class="subtitle">cordova-plugin-rdna Ready</p>
+            </div>
+
+            <!-- Success Summary Card -->
+            <div class="card success-card">
+                <div class="success-header-content">
+                    <div class="success-badge">SUCCESS</div>
+                    <h2 class="success-title">cordova-plugin-rdna initialized successfully</h2>
+                </div>
+                <div class="success-description">
+                    <p class="description-text">
+                        The cordova-plugin-rdna has been successfully initialized and is ready to use for secure authentication and communication.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Session Details Card -->
+            <div class="card">
+                <h2 class="card-title">Session Details</h2>
+                <div class="info-row">
+                    <span class="info-label">Status Code:</span>
+                    <span class="status-code-text" id="status-code">100</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Session Type:</span>
+                    <span class="info-value" id="session-type">App Session</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Session ID:</span>
+                    <span class="session-id-text" id="session-id">...</span>
+                </div>
+            </div>
+
+            <!-- Next Steps Card -->
+            <div class="card">
+                <h2 class="card-title">What's Next?</h2>
+                <div class="next-steps-container">
+                    <div class="next-step">
+                        <div class="step-icon">✓</div>
+                        <span class="next-step-text">cordova-plugin-rdna is now ready for secure operations</span>
+                    </div>
+                    <div class="next-step">
+                        <div class="step-icon">🔐</div>
+                        <span class="next-step-text">You can now perform authenticated API calls</span>
+                    </div>
+                    <div class="next-step">
+                        <div class="step-icon">🚀</div>
+                        <span class="next-step-text">Use the session for secure communication</span>
+                    </div>
+                    <div class="next-step">
+                        <div class="step-icon">📱</div>
+                        <span class="next-step-text">Continue with your application flow</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Template: Tutorial Error Screen -->
+    <template id="TutorialError-template">
+        <div class="container">
+            <!-- Header -->
+            <div class="header error-header">
+                <h1 class="title">Initialization Error</h1>
+                <p class="subtitle">Something went wrong</p>
+            </div>
+
+            <!-- Error Summary Card -->
+            <div class="card error-card">
+                <div class="error-header-content">
+                    <div class="error-badge">ERROR</div>
+                    <h2 class="error-title">Initialization failed</h2>
+                </div>
+                <div class="error-description">
+                    <p class="description-text" id="error-description">
+                        An error occurred during SDK initialization.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Error Details Card -->
+            <div class="card">
+                <h2 class="card-title">Error Details</h2>
+                <div class="info-row">
+                    <span class="info-label">Short Error Code:</span>
+                    <span class="error-code-text" id="short-error-code">N/A</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Long Error Code:</span>
+                    <span class="error-code-text" id="long-error-code">N/A</span>
+                </div>
+            </div>
+
+            <!-- Troubleshooting Card -->
+            <div class="card">
+                <h2 class="card-title">Troubleshooting Steps</h2>
+                <div class="next-steps-container">
+                    <div class="next-step">
+                        <div class="step-icon">1</div>
+                        <span class="next-step-text">Check your internet connection</span>
+                    </div>
+                    <div class="next-step">
+                        <div class="step-icon">2</div>
+                        <span class="next-step-text">Verify connection profile settings</span>
+                    </div>
+                    <div class="next-step">
+                        <div class="step-icon">3</div>
+                        <span class="next-step-text">Review error codes in documentation</span>
+                    </div>
+                    <div class="next-step">
+                        <div class="step-icon">4</div>
+                        <span class="next-step-text">Contact support if issue persists</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ========== ALL SCRIPTS (Loaded once, persist forever - SPA magic!) ========== -->
+
+    <!-- Cordova -->
+    <script src="cordova.js"></script>
+
+    <!-- Utilities -->
+    <script src="src/uniken/utils/connectionProfileParser.js"></script>
+    <script src="src/uniken/utils/progressHelper.js"></script>
+
+    <!-- Services -->
+    <script src="src/uniken/services/rdnaEventManager.js"></script>
+    <script src="src/uniken/services/rdnaService.js"></script>
+
+    <!-- Providers -->
+    <script src="src/uniken/providers/SDKEventProvider.js"></script>
+
+    <!-- App Initializer (Centralizes SDK handler registration) -->
+    <script src="src/uniken/AppInitializer.js"></script>
+
+    <!-- Navigation -->
+    <script src="src/tutorial/navigation/NavigationService.js"></script>
+
+    <!-- All Screen Scripts (Loaded upfront, available for NavigationService) -->
+    <script src="src/tutorial/screens/TutorialHomeScreen.js"></script>
+    <script src="src/tutorial/screens/TutorialSuccessScreen.js"></script>
+    <script src="src/tutorial/screens/TutorialErrorScreen.js"></script>
+
+    <!-- App Bootstrap (deviceready → AppInitializer → navigate) -->
+    <script src="js/app.js"></script>
+</body>
+</html>
