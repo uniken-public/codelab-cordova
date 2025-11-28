@@ -6,7 +6,7 @@
 
 > **Codelab Step 1:** Learn the fundamentals of REL-ID SDK integration in Cordova applications
 
-This folder contains the source code for the Cordova implementation of the [REL-ID Initialize](https://codelab.uniken.com/codelabs/cordova-relid-initialization-flow/index.html?index=..%2F..index#0) codelab.
+This folder contains the source code for the solution of the [REL-ID Initialize](https://codelab.uniken.com/codelabs/cordova-relid-initialization-flow/index.html?index=..%2F..index#0)
 
 ## 📚 What You'll Learn
 

@@ -1,0 +1,2035 @@
+/**
+ * REL-ID Tutorial Styles
+ * Cordova implementation of React Native design
+ */
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none;
+    font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8fafc;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc;
+}
+
+/* Header Styles */
+.header {
+    background-color: #2563eb;
+    padding: 48px 24px 24px 24px;
+    text-align: center;
+}
+
+.header.success-header {
+    background-color: #16a34a;
+}
+
+.header.error-header {
+    background-color: #dc2626;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #bfdbfe;
+    margin: 0;
+}
+
+.success-header .subtitle {
+    color: #bbf7d0;
+}
+
+.error-header .subtitle {
+    color: #fecaca;
+}
+
+/* Card Styles */
+.card {
+    background-color: #ffffff;
+    margin: 16px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 16px 0;
+}
+
+/* Info Row Styles */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.info-label {
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* Tutorial Steps */
+.step-container {
+    margin-top: 8px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: #2563eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.step-number-text {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.step-text {
+    flex: 1;
+    font-size: 16px;
+    color: #4b5563;
+}
+
+/* Button Styles */
+.button-container {
+    margin: 16px;
+}
+
+.initialize-button {
+    background-color: #16a34a;
+    padding: 16px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.initialize-button.initializing {
+    background-color: #9ca3af;
+}
+
+.initialize-button:disabled {
+    cursor: not-allowed;
+}
+
+/* Progress Container */
+.progress-container {
+    margin: 16px;
+    padding: 16px;
+    background-color: #eff6ff;
+    border-radius: 8px;
+    border-left: 4px solid #2563eb;
+}
+
+.progress-text {
+    font-size: 16px;
+    color: #1e40af;
+    font-weight: 500;
+    text-align: center;
+    line-height: 22px;
+    margin: 0;
+    white-space: pre-line;
+}
+
+/* Footer */
+.footer {
+    margin: 16px;
+    padding: 16px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+}
+
+.footer-text {
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+    line-height: 20px;
+    margin: 0;
+}
+
+/* Success Card Styles */
+.success-card {
+    border-left: 4px solid #16a34a;
+}
+
+.success-header-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.success-badge {
+    background-color: #16a34a;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 12px;
+}
+
+.success-badge-text {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.success-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    flex: 1;
+}
+
+.success-description {
+    background-color: #f0fdf4;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.description-text {
+    font-size: 14px;
+    color: #166534;
+    line-height: 20px;
+    margin: 0;
+}
+
+/* Session Details */
+.session-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.session-label {
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.session-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    font-family: 'Courier New', monospace;
+}
+
+.session-container {
+    margin-top: 8px;
+}
+
+.session-id-container {
+    background-color: #f3f4f6;
+    padding: 6px 12px;
+    border-radius: 6px;
+    flex: 1;
+    margin-left: 12px;
+}
+
+.session-id-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+}
+
+.status-code-text {
+    font-size: 16px;
+    color: #166534;
+    font-family: 'Courier New', monospace;
+}
+
+/* Next Steps */
+.next-steps-container {
+    margin-top: 8px;
+}
+
+.next-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.step-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: #eff6ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.next-step-text {
+    flex: 1;
+    font-size: 16px;
+    color: #4b5563;
+}
+
+/* Error Card Styles */
+.error-card {
+    border-left: 4px solid #dc2626;
+}
+
+.error-header-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.severity-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 12px;
+    background-color: #dc2626;
+}
+
+.severity-text {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.error-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    flex: 1;
+}
+
+.error-description {
+    background-color: #fef2f2;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.error-description .description-text {
+    color: #7f1d1d;
+}
+
+/* Error Codes */
+.code-container {
+    margin-top: 8px;
+}
+
+.code-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.code-label {
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.code-value {
+    background-color: #f3f4f6;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.code-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    font-family: 'Courier New', monospace;
+}
+
+/* Troubleshooting */
+.troubleshooting-container {
+    margin-top: 8px;
+}
+
+.troubleshooting-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.step-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #2563eb;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.troubleshooting-text {
+    flex: 1;
+    font-size: 16px;
+    color: #4b5563;
+}
+
+/* ========== MTD MODAL STYLES ========== */
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none; /* Toggled by MTDThreatManager */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+/* Modal Container */
+.modal-container {
+    background-color: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #dc2626;
+    padding: 20px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    text-align: center;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+
+.modal-subtitle {
+    font-size: 14px;
+    color: #fecaca;
+    margin: 0;
+    line-height: 20px;
+}
+
+/* Threats Container */
+.threats-container {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.threats-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+.threats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Threat Item */
+.threat-item {
+    background-color: #fef2f2;
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 4px solid #dc2626;
+}
+
+.threat-header {
+    margin-bottom: 12px;
+}
+
+.threat-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.threat-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.threat-title-container {
+    flex: 1;
+}
+
+.threat-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 2px;
+}
+
+.threat-category {
+    font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.severity-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.threat-content {
+    margin-top: 8px;
+}
+
+.threat-message {
+    font-size: 14px;
+    color: #7f1d1d;
+    line-height: 20px;
+    margin-bottom: 12px;
+}
+
+.threat-details {
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #fecaca;
+}
+
+.details-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.details-text {
+    font-size: 12px;
+    color: #4b5563;
+    margin-bottom: 2px;
+    font-family: monospace;
+}
+
+/* Modal Buttons */
+.modal-buttons-container {
+    padding: 20px;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-button {
+    padding: 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.modal-button:active {
+    opacity: 0.8;
+}
+
+.modal-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.proceed-button {
+    background-color: #f59e0b;
+    color: #ffffff;
+}
+
+.exit-button {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+.exit-button-full {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+.button-loading {
+    opacity: 0.6;
+}
+
+/* ========== SECURITY EXIT SCREEN STYLES ========== */
+
+.security-exit-container {
+    min-height: 100vh;
+    background-color: #dc2626;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.security-exit-content {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    max-width: 340px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.security-icon-large {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.security-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #dc2626;
+    margin: 0 0 16px 0;
+}
+
+.security-message {
+    font-size: 16px;
+    color: #374151;
+    line-height: 24px;
+    margin-bottom: 24px;
+}
+
+.exit-instructions {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.instructions-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 12px 0;
+}
+
+.instruction-item {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 6px;
+    padding-left: 8px;
+    text-align: left;
+}
+
+.warning-box {
+    background-color: #fef3c7;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #f59e0b;
+    width: 100%;
+}
+
+.warning-text {
+    font-size: 14px;
+    color: #92400e;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Additional screen container for compatibility */
+.screen-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc;
+}
+
+/* ========== MFA FORM STYLES ========== */
+
+/* Form Card */
+.form-card {
+    background-color: #ffffff;
+    margin: 16px;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Container */
+.input-container {
+    margin-bottom: 24px;
+}
+
+.input-label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.input-field {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #2c3e50;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.input-field.error {
+    border-color: #e74c3c;
+}
+
+/* Password Input Wrapper (for toggle button) */
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-input-wrapper .input-field {
+    padding-right: 50px;
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+/* Error Text */
+.error-text {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 8px;
+    display: none;
+}
+
+/* Status Banner */
+.status-banner {
+    margin: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    display: none;
+}
+
+.status-banner.status-error {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626;
+    color: #7f1d1d;
+}
+
+.status-banner.status-success {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a;
+    color: #166534;
+}
+
+.status-banner.status-info {
+    background-color: #eff6ff;
+    border-left: 4px solid #2563eb;
+    color: #1e40af;
+}
+
+/* Info Card */
+.info-card {
+    background-color: #eff6ff;
+    border-left: 4px solid #2563eb;
+}
+
+.info-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e40af;
+    margin: 0 0 12px 0;
+}
+
+.info-card-text {
+    font-size: 14px;
+    color: #1e3a8a;
+    line-height: 20px;
+    margin: 0;
+}
+
+/* Attempts Info */
+.attempts-info {
+    margin: 16px 0;
+    padding: 12px;
+    background-color: #fef3c7;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    color: #92400e;
+    font-weight: 500;
+}
+
+/* ========== BUTTON STYLES ========== */
+
+.primary-button {
+    background-color: #3498db;
+    padding: 16px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+.primary-button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.secondary-button {
+    background-color: transparent;
+    padding: 16px;
+    border-radius: 8px;
+    border: 2px solid #3498db;
+    width: 100%;
+    color: #3498db;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+.secondary-button:disabled {
+    border-color: #bdc3c7;
+    color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.success-button {
+    background-color: #27ae60;
+}
+
+.danger-button {
+    background-color: #e74c3c;
+}
+
+.close-button {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Loader */
+.button-loader {
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Spinner Animation */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px;
+}
+
+/* ========== DASHBOARD STYLES ========== */
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.menu-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.menu-button:active {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0 0 0 16px;
+}
+
+.header-spacer {
+    flex: 1;
+}
+
+.dashboard-content {
+    padding: 20px;
+}
+
+.welcome-container {
+    background-color: #e8f5e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+    border-left: 4px solid #27ae60;
+}
+
+.welcome-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #27ae60;
+    margin: 0 0 8px 0;
+}
+
+.welcome-subtitle {
+    font-size: 16px;
+    color: #2c3e50;
+    margin: 0 0 16px 0;
+}
+
+.user-info-container {
+    display: inline-block;
+}
+
+.user-info-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-right: 8px;
+}
+
+.user-info-value {
+    font-size: 18px;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.success-container {
+    background-color: #e8f4f8;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.success-text {
+    font-size: 16px;
+    color: #2c3e50;
+    text-align: center;
+    line-height: 24px;
+    margin: 0;
+}
+
+.session-id {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+/* Auth Type Description */
+.auth-type-description {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 20px;
+    margin-bottom: 16px;
+}
+
+.consent-info {
+    margin-top: 16px;
+}
+
+.user-info-text {
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+/* Status Color Variants */
+.status-success {
+    color: #16a34a;
+}
+
+.error-code {
+    font-family: 'Courier New', monospace;
+}
+
+/* Icon Styles */
+.success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background-color: #dcfce7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 16px auto;
+    font-size: 36px;
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.error-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background-color: #fee2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 16px auto;
+    font-size: 36px;
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* Error Section */
+.error-section {
+    margin-bottom: 20px;
+}
+
+.error-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6b7280;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+}
+
+.error-description {
+    font-size: 16px;
+    color: #dc2626;
+    line-height: 22px;
+    font-weight: 500;
+}
+
+.error-info-card {
+    background-color: #fef3c7;
+    border-left-color: #f59e0b;
+}
+
+.troubleshooting-list {
+    margin: 8px 0 0 0;
+    padding-left: 24px;
+}
+
+.troubleshooting-list li {
+    font-size: 14px;
+    color: #92400e;
+    line-height: 24px;
+}
+
+/* ========== DRAWER MENU STYLES ========== */
+
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 8888;
+    display: none;
+}
+
+.drawer-menu {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+    z-index: 9000;
+    transition: left 0.3s ease-in-out;
+}
+
+.drawer-menu.open {
+    left: 0;
+}
+
+.drawer-header {
+    background-color: #3498db;
+    padding: 24px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drawer-title {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.drawer-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.drawer-content {
+    padding: 16px 0;
+}
+
+.drawer-user-info {
+    padding: 16px;
+    background-color: #f8f9fa;
+    margin-bottom: 16px;
+}
+
+.drawer-user-label {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0 0 4px 0;
+}
+
+.drawer-username {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.drawer-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.drawer-nav li {
+    margin: 0;
+    padding: 0;
+}
+
+.drawer-link {
+    display: block;
+    padding: 16px 20px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.drawer-link:hover {
+    background-color: #f8f9fa;
+}
+
+.drawer-link.logout-link {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.drawer-link.logout-link:hover {
+    background-color: #fef2f2;
+}
+
+/* Session ID word-break for long IDs */
+.session-id {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    word-break: break-all;
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header {
+        padding: 32px 16px 16px 16px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .card {
+        margin: 12px;
+        padding: 16px;
+    }
+}
+
+/* ========================================
+   SESSION MODAL STYLES
+   ======================================== */
+
+/* Session Modal Overlay */
+.session-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Higher than MTD modal */
+    padding: 20px;
+}
+
+/* Session Modal Container */
+.session-modal-container {
+    background-color: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Session Modal Header */
+.session-modal-header {
+    padding: 20px;
+    text-align: center;
+}
+
+.session-modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+
+.session-modal-subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 20px;
+}
+
+/* Session Modal Body */
+.session-modal-body {
+    padding: 20px;
+}
+
+.session-modal-message {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.session-modal-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.session-modal-text {
+    font-size: 16px;
+    color: #1f2937;
+    line-height: 24px;
+    margin: 0;
+}
+
+/* Session Modal Countdown */
+.session-modal-countdown {
+    background-color: #fef3c7;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 2px solid #f59e0b;
+}
+
+.session-modal-countdown-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #92400e;
+    margin: 0 0 8px 0;
+}
+
+.session-modal-countdown-text {
+    font-size: 32px;
+    font-weight: bold;
+    color: #d97706;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+}
+
+/* Session Modal Buttons */
+.session-modal-buttons {
+    padding: 20px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.session-modal-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.session-modal-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.session-modal-btn-primary {
+    background-color: #3b82f6;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.session-modal-btn-primary:hover:not(:disabled) {
+    background-color: #2563eb;
+}
+
+.session-modal-btn-secondary {
+    background-color: #6b7280;
+    color: #ffffff;
+}
+
+.session-modal-btn-secondary:hover:not(:disabled) {
+    background-color: #4b5563;
+}
+
+/* Loading Spinner (for Extending... state) */
+.spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive adjustments for session modal */
+@media (max-width: 768px) {
+    .session-modal-overlay {
+        padding: 16px;
+    }
+
+    .session-modal-container {
+        max-width: 100%;
+    }
+
+    .session-modal-title {
+        font-size: 18px;
+    }
+
+    .session-modal-countdown-text {
+        font-size: 28px;
+    }
+}
+
+/* ========== App Bar (Navigation) ========== */
+.app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-bar-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.app-bar .back-button,
+.app-bar .menu-button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.app-bar .back-button:hover,
+.app-bar .menu-button:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.app-bar .back-button:active,
+.app-bar .menu-button:active {
+  background: rgba(255,255,255,0.4);
+}
+
+/* ========== Notifications List ========== */
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.notification-item {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+
+.notification-item:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.notification-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  flex: 1;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.notification-message {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin: 8px 0 12px 0;
+}
+
+.notification-action-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.notification-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.notification-action-btn:active {
+  transform: translateY(0);
+}
+
+.notification-no-actions {
+  font-size: 13px;
+  color: #999;
+  font-style: italic;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+  font-size: 16px;
+}
+
+/* ========== Notification Action Modal ========== */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.radio-option:hover {
+  border-color: #667eea;
+  background: #f8f9ff;
+}
+
+.radio-option input[type="radio"] {
+  margin-right: 12px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.radio-option label {
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  flex: 1;
+}
+
+.modal-message {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal-buttons .primary-button,
+.modal-buttons .secondary-button {
+  flex: 1;
+  max-width: 120px;
+}
+
+/* ========== Loading Indicator ========== */
+.loading-indicator {
+  text-align: center;
+  padding: 20px;
+  color: #667eea;
+  font-weight: 500;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ========== VerifyAuth Screen (React Native Style) ========== */
+/* VerifyAuth screen close button override (React Native style - top-right, gray) */
+#VerifyAuth-template .close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  left: auto;           /* Override default left position */
+  width: 40px;
+  height: 40px;
+  background: rgba(0,0,0,0.05);
+  border: none;
+  border-radius: 20px;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+  box-shadow: none;     /* Remove shadow for VerifyAuth */
+}
+
+#VerifyAuth-template .close-button:hover {
+  background: rgba(0,0,0,0.1);
+  color: #333;
+}
+
+#VerifyAuth-template .close-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.message-container {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.message-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1976d2;
+  margin: 0 0 8px 0;
+}
+
+.message-text {
+  font-size: 16px;
+  color: #1565c0;
+  line-height: 24px;
+  margin: 0;
+}
+
+.fallback-container {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.fallback-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.fallback-description {
+  font-size: 14px;
+  color: #7f8c8d;
+  line-height: 20px;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.outline-button {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.outline-button:hover {
+  background: #667eea;
+  color: white;
+}
+
+.outline-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error-banner {
+  background: #ffebee;
+  border-left: 4px solid #f44336;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  color: #c62828;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.info-banner {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.banner-text {
+  color: #1565c0;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ========== NOTIFICATIONS SCREEN (React Native Style) ========== */
+
+/* Notifications Header */
+.notifications-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.header-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 20px;
+  color: #2c3e50;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.header-icon-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.refresh-btn {
+  font-size: 18px;
+}
+
+/* Notifications List */
+.notifications-list {
+  padding: 16px;
+  background: #f8f9fa;
+}
+
+/* Notification Item Card (React Native style) */
+.notification-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.notification-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.notification-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+  flex: 1;
+  padding-right: 12px;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #7f8c8d;
+  white-space: nowrap;
+}
+
+.notification-message {
+  font-size: 14px;
+  color: #5a6c7d;
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+/* Notification Footer (React Native style) */
+.notification-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.notification-actions-count {
+  font-size: 13px;
+  color: #3498db;
+  font-weight: 500;
+}
+
+.notification-status {
+  font-size: 12px;
+  color: #95a5a6;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Expiry Timestamp (Orange like React Native) */
+.notification-expiry {
+  font-size: 12px;
+  color: #e67e22;
+  font-style: italic;
+  margin: 8px 0 0 0;
+  font-weight: 500;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #95a5a6;
+  font-size: 16px;
+}
+
+/* ========== NOTIFICATION ACTION MODAL (React Native Style) ========== */
+
+.modal-body {
+  padding: 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Notification Details Section */
+.notification-details {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.detail-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+}
+
+.detail-message {
+  font-size: 14px;
+  color: #5a6c7d;
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+  white-space: pre-wrap;
+}
+
+.detail-time {
+  font-size: 12px;
+  color: #7f8c8d;
+  margin: 4px 0;
+}
+
+.detail-uuid {
+  font-size: 11px;
+  color: #95a5a6;
+  margin: 8px 0 0 0;
+  word-break: break-all;
+}
+
+/* Action Buttons Container */
+.action-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px 20px 20px;
+}
+
+/* Action Button (React Native style - stacked blue buttons) */
+.action-button {
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  text-align: center;
+  width: 100%;
+}
+
+.action-button:hover {
+  background: #2980b9;
+}
+
+.action-button:active {
+  transform: scale(0.98);
+}
+
+.action-button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* ========== NOTIFICATION MODAL HEADER FIX ========== */
+
+/* Override modal-header for notification modal (React Native style) */
+#notification-action-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+#notification-action-modal .modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+  flex: 1;
+}
+
+/* Close button styling (React Native style) */
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ========== VERIFY AUTH SCREEN - Content Title/Subtitle Override ========== */
+
+/* Override title/subtitle styles for VerifyAuth screen content (React Native match) */
+#VerifyAuth-template .content .title,
+.screen-container .content .title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  margin: 0 0 8px 0;
+}
+
+#VerifyAuth-template .content .subtitle,
+.screen-container .content .subtitle {
+  font-size: 16px;
+  color: #7f8c8d;
+  text-align: center;
+  margin: 0 0 30px 0;
+}
