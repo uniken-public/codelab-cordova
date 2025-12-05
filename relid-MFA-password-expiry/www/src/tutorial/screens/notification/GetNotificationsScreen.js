@@ -173,15 +173,24 @@ const GetNotificationsScreen = {
     this.isLoading = false;
     this.showLoading(false);
 
-    // Check status (Cordova plugin path: data.pArgs.response.StatusCode)
-    const statusCode = data.pArgs?.response?.StatusCode;
-    if (statusCode !== 100) {
-      console.error('GetNotificationsScreen - Status error:', statusCode);
-      this.showError('Failed to retrieve notifications');
+    // Layer 1: Check API-level error (error.longErrorCode)
+    if (data.error && data.error.longErrorCode !== 0) {
+      const errorMsg = data.error.errorString || 'API error occurred';
+      console.error('GetNotificationsScreen - API error:', errorMsg, 'Code:', data.error.longErrorCode);
+      this.showError(errorMsg);
       return;
     }
 
-    // Get notifications list (Cordova plugin path: data.pArgs.response.ResponseData.notifications)
+    // Layer 2: Check status code (pArgs.response.StatusCode)
+    const statusCode = data.pArgs?.response?.StatusCode;
+    if (statusCode !== 100) {
+      const statusMsg = data.pArgs?.response?.StatusMsg || 'Failed to retrieve notifications';
+      console.error('GetNotificationsScreen - Status error:', statusCode, 'Message:', statusMsg);
+      this.showError(statusMsg);
+      return;
+    }
+
+    // Success: Process notifications data
     this.notifications = data.pArgs?.response?.ResponseData?.notifications || [];
     console.log('GetNotificationsScreen - Received', this.notifications.length, 'notifications');
 
@@ -384,34 +393,40 @@ const GetNotificationsScreen = {
       return;
     }
 
-    // SECOND: Check ResponseData.status_code (if exists)
-    if (data.pArgs?.response?.ResponseData?.status_code !== undefined) {
-      const statusCode = data.pArgs.response.ResponseData.status_code;
-      const message = data.pArgs.response.ResponseData.message || 'Success';
+    // SECOND: Check response?.StatusCode
+    const statusCode = data.pArgs?.response?.StatusCode;
+    const statusMsg = data.pArgs?.response?.StatusMsg || 'Unknown error';
 
-      if (statusCode === 100) {
-        console.log('GetNotificationsScreen - Notification updated successfully:', message);
-        alert('Action submitted successfully!');
-        this.loadNotifications();
-      } else {
-        console.error('GetNotificationsScreen - ResponseData status error:', statusCode, message);
-        alert(message);
-        this.loadNotifications();
-      }
+    if (statusCode === 100) {
+      console.log('GetNotificationsScreen - Notification updated successfully:', statusMsg);
+      alert('Action submitted successfully!');
+      this.loadNotifications();
     } else {
-      // THIRD: Fallback to StatusCode
-      const statusCode = data.pArgs?.response?.StatusCode;
-      const statusMsg = data.pArgs?.response?.StatusMsg || 'Unknown error';
+      console.error('GetNotificationsScreen - StatusCode error:', statusCode, statusMsg);
+      alert(statusMsg);
+      this.loadNotifications();
+    }
+  },
 
-      if (statusCode === 100) {
-        console.log('GetNotificationsScreen - Notification updated successfully:', statusMsg);
-        alert('Action submitted successfully!');
-        this.loadNotifications();
-      } else {
-        console.error('GetNotificationsScreen - StatusCode error:', statusCode, statusMsg);
-        alert(statusMsg);
-        this.loadNotifications();
-      }
+  /**
+   * Handle logout from drawer
+   */
+  async handleLogOut() {
+    console.log('GetNotificationsScreen - Logging out user:', this.sessionParams.userID);
+
+    try {
+      const syncResponse = await rdnaService.logOff(this.sessionParams.userID);
+      console.log('GetNotificationsScreen - logOff sync response received:', JSON.stringify({
+        longErrorCode: syncResponse.error?.longErrorCode,
+        errorString: syncResponse.error?.errorString
+      }, null, 2));
+
+      // Sync response successful - SDK will trigger onUserLoggedOff and getUser events
+      console.log('GetNotificationsScreen - LogOff successful, waiting for SDK events');
+    } catch (error) {
+      console.error('GetNotificationsScreen - logOff error:', error);
+      const errorMessage = error.error?.errorString || 'Failed to log out';
+      alert('Logout Error\n\n' + errorMessage);
     }
   },
 

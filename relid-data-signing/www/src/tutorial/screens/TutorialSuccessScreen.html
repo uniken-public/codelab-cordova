@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Initialization Success</title>
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header success-header">
+            <h1 class="title">Initialization Success!</h1>
+            <p class="subtitle">cordova-plugin-rdna Ready</p>
+        </div>
+
+        <!-- Success Summary Card -->
+        <div class="card success-card">
+            <div class="success-header-section">
+                <div class="success-badge">
+                    <span class="success-badge-text">SUCCESS</span>
+                </div>
+                <h2 class="success-title">cordova-plugin-rdna initialized successfully</h2>
+            </div>
+            <div class="success-description">
+                <p class="description-text">
+                    The cordova-plugin-rdna has been successfully initialized and is ready to use for secure authentication and communication.
+                </p>
+            </div>
+        </div>
+
+        <!-- Session Details Card -->
+        <div class="card">
+            <h2 class="card-title">Session Details</h2>
+            <div class="info-row">
+                <span class="info-label">Status Code:</span>
+                <span class="status-code-text" id="statusCode">-</span>
+            </div>
+            <div class="session-row">
+                <span class="session-label">Session Type:</span>
+                <span class="session-value" id="sessionType">-</span>
+            </div>
+            <div class="session-container">
+                <div class="session-row">
+                    <span class="session-label">Session ID:</span>
+                    <div class="session-id-container">
+                        <span class="session-id-text" id="sessionId">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Steps Card -->
+        <div class="card">
+            <h2 class="card-title">What's Next?</h2>
+            <div class="next-steps-container">
+                <div class="next-step">
+                    <div class="step-icon">✓</div>
+                    <span class="next-step-text">cordova-plugin-rdna is now ready for secure operations</span>
+                </div>
+                <div class="next-step">
+                    <div class="step-icon">🔐</div>
+                    <span class="next-step-text">You can now perform authenticated API calls</span>
+                </div>
+                <div class="next-step">
+                    <div class="step-icon">🚀</div>
+                    <span class="next-step-text">Use the session for secure communication</span>
+                </div>
+                <div class="next-step">
+                    <div class="step-icon">📱</div>
+                    <span class="next-step-text">Continue with your application flow</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cordova & App Scripts -->
+    <script src="../../../cordova.js"></script>
+    <script src="../navigation/NavigationService.js"></script>
+    <script src="TutorialSuccessScreen.js"></script>
+</body>
+</html>

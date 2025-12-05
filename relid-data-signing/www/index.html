@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+  <title>REL-ID Integration Tutorial</title>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+  <!-- ========== PERSISTENT SHELL (never destroyed during navigation) ========== -->
+
+  <!-- Drawer Menu Overlay -->
+  <div id="drawer-overlay" class="drawer-overlay" style="display: none;"></div>
+
+  <!-- Drawer Menu (slides in from left) -->
+  <nav id="drawer-menu" class="drawer-menu">
+    <div class="drawer-header">
+      <h2 class="drawer-title">REL-ID MFA</h2>
+      <button id="drawer-close-btn" class="drawer-close-btn">✕</button>
+    </div>
+    <div class="drawer-content">
+      <div id="drawer-user-info" class="drawer-user-info" style="display: none;">
+        <p class="drawer-user-label">Logged in as:</p>
+        <p id="drawer-username" class="drawer-username">-</p>
+      </div>
+      <ul class="drawer-nav">
+        <li><a href="#" id="drawer-dashboard-link" class="drawer-link">🏠 Dashboard</a></li>
+        <li><a href="#" id="drawer-notifications-link" class="drawer-link">🔔 Get Notifications</a></li>
+        <li><a href="#" id="drawer-lda-toggling-link" class="drawer-link">🔐 LDA Toggling</a></li>
+        <li><a href="#" id="drawer-data-signing-link" class="drawer-link">🔏 Data Signing</a></li>
+        <li id="drawer-update-password-item" style="display: none;">
+          <a href="#" id="drawer-update-password-link" class="drawer-link">🔑 Update Password</a>
+        </li>
+        <li><a href="#" id="drawer-logout-link" class="drawer-link logout-link">🚪 Log Out</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- MTD Modal Overlay (always in DOM, visibility toggled) -->
+  <div id="mtd-modal-overlay" class="modal-overlay" style="display: none;">
+    <div id="mtd-modal-container" class="modal-container">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h2 id="modal-title" class="modal-title"></h2>
+        <p id="modal-subtitle" class="modal-subtitle"></p>
+      </div>
+
+      <!-- Threats Container -->
+      <div class="threats-container">
+        <div id="threats-header" class="threats-header"></div>
+        <div id="threats-list" class="threats-list"></div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div id="modal-buttons" class="modal-buttons-container"></div>
+    </div>
+  </div>
+
+  <!-- Session Modal Overlay (always in DOM, visibility toggled) -->
+  <div id="session-modal" class="session-modal-overlay" style="display: none;">
+    <div id="session-modal-content">
+      <!-- Session modal content will be rendered dynamically by SessionModal.js -->
+    </div>
+  </div>
+
+  <!-- Step-Up Password Modal Overlay (always in DOM, visibility toggled) -->
+  <div id="stepup-password-modal" class="stepup-modal-overlay" style="display: none;">
+    <div id="stepup-modal-content" class="stepup-modal-container">
+      <!-- Step-up modal content will be rendered dynamically by StepUpPasswordDialog.js -->
+    </div>
+  </div>
+
+  <!-- LDA Toggle Auth Modal (for LDA toggling challengeModes 5, 14, 15, 16) -->
+  <div id="lda-toggle-auth-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-container lda-auth-container">
+      <div id="lda-toggle-auth-content">
+        <!-- Content will be rendered dynamically by LDAToggleAuthDialog.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Container (dynamic content loaded here) -->
+  <div id="app-content">
+    <!-- Screen templates loaded here dynamically via NavigationService -->
+  </div>
+
+  <!-- ========== SCREEN TEMPLATES (hidden, loaded on demand) ========== -->
+
+  <!-- Tutorial Home Screen Template -->
+  <template id="TutorialHome-template">
+    <div class="screen-container">
+      <!-- Header -->
+      <div class="header">
+        <h1 class="title">REL-ID Integration Tutorial</h1>
+        <p class="subtitle">Learn react-native-rdna-client plugin Integration</p>
+      </div>
+
+      <!-- SDK Info Card -->
+      <div class="card">
+        <h2 class="card-title">SDK Information</h2>
+        <div class="info-row">
+          <span class="info-label">SDK Version:</span>
+          <span id="sdk-version" class="info-value">Loading...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Platform:</span>
+          <span class="info-value">Cordova</span>
+        </div>
+      </div>
+
+      <!-- Tutorial Steps -->
+      <div class="card">
+        <h2 class="card-title">Tutorial Steps</h2>
+        <div class="step-container">
+          <div class="step">
+            <div class="step-number">1</div>
+            <p class="step-text">Click "Initialize" to start SDK initialization</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <p class="step-text">Watch real-time initialization progress</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <p class="step-text">MTD will check for security threats</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <p class="step-text">View results on completion</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Initialize Button -->
+      <div class="button-container">
+        <button id="initialize-btn" class="initialize-button">Initialize</button>
+      </div>
+
+      <!-- Progress Container -->
+      <div id="progress-container" class="progress-container" style="display: none;">
+        <p id="progress-text" class="progress-text">RDNA initialization in progress...</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p class="footer-text">
+          This tutorial demonstrates REL-ID SDK initialization with Mobile Threat Detection (MTD)
+        </p>
+      </div>
+    </div>
+  </template>
+
+  <!-- Tutorial Success Screen Template -->
+  <template id="TutorialSuccess-template">
+    <div class="screen-container">
+      <!-- Success Header -->
+      <div class="header success-header">
+        <div class="success-icon">✓</div>
+        <h1 class="title">Initialization Successful</h1>
+        <p class="subtitle">SDK initialized with active session</p>
+      </div>
+
+      <!-- Session Details Card -->
+      <div class="card">
+        <h2 class="card-title">Session Details</h2>
+
+        <div class="info-row">
+          <span class="info-label">Status Code:</span>
+          <span id="status-code" class="info-value status-success">-</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Session Type:</span>
+          <span id="session-type" class="info-value">-</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Session ID:</span>
+          <span id="session-id" class="info-value session-id">-</span>
+        </div>
+      </div>
+
+      <!-- Info Card -->
+      <div class="card info-card">
+        <h3 class="info-card-title">✓ Security Checks Passed</h3>
+        <p class="info-card-text">
+          No security threats detected. The SDK has successfully initialized and
+          established a secure session with the server.
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p class="footer-text">
+          Your session is now active and secure
+        </p>
+      </div>
+    </div>
+  </template>
+
+  <!-- Tutorial Error Screen Template -->
+  <template id="TutorialError-template">
+    <div class="screen-container">
+      <!-- Error Header -->
+      <div class="header error-header">
+        <div class="error-icon">✕</div>
+        <h1 class="title">Initialization Failed</h1>
+        <p class="subtitle">An error occurred during SDK initialization</p>
+      </div>
+
+      <!-- Error Details Card -->
+      <div class="card">
+        <h2 class="card-title">Error Details</h2>
+
+        <div class="error-section">
+          <h3 class="error-section-title">Description:</h3>
+          <p id="error-description" class="error-description">-</p>
+        </div>
+
+        <div class="error-section">
+          <h3 class="error-section-title">Error Codes:</h3>
+          <div class="info-row">
+            <span class="info-label">Short Code:</span>
+            <span id="short-error-code" class="info-value error-code">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Long Code:</span>
+            <span id="long-error-code" class="info-value error-code">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Troubleshooting Card -->
+      <div class="card info-card error-info-card">
+        <h3 class="info-card-title">Troubleshooting Tips</h3>
+        <ul class="troubleshooting-list">
+          <li>Check network connectivity</li>
+          <li>Verify connection profile settings</li>
+          <li>Check SDK logs for detailed error information</li>
+          <li>Contact support if error persists</li>
+        </ul>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p class="footer-text">
+          Please resolve the error and try again
+        </p>
+      </div>
+    </div>
+  </template>
+
+  <!-- Security Exit Screen Template -->
+  <template id="SecurityExit-template">
+    <div class="screen-container security-exit-container">
+      <div class="security-exit-content">
+        <div class="security-icon-large">🔒</div>
+        <h1 class="security-title">Security Protection Active</h1>
+        <p class="security-message">
+          A security threat was detected. For your protection, this application
+          has been secured and must be manually closed.
+        </p>
+
+        <div id="exit-instructions" class="exit-instructions">
+          <h2 class="instructions-title">How to close the app:</h2>
+          <div class="instruction-item">• Press the home button</div>
+          <div class="instruction-item">• Or swipe up from bottom (newer devices)</div>
+          <div class="instruction-item">• Or use the app switcher and swipe up on this app</div>
+        </div>
+
+        <div class="warning-box">
+          <p class="warning-text">
+            ⚠️ Do not reopen this app until the security issue is resolved.
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- ========== MFA SCREEN TEMPLATES ========== -->
+
+  <!-- Check User Screen Template (Username Input) -->
+  <template id="CheckUser-template">
+    <div class="screen-container">
+      <div class="header">
+        <h1 class="title">Enter Username</h1>
+        <p class="subtitle">Enter your username to continue</p>
+      </div>
+
+      <!-- Status Banner -->
+      <div id="checkuser-status-banner" class="status-banner" style="display: none;"></div>
+
+      <div class="card form-card">
+        <div class="input-container">
+          <label class="input-label">Username</label>
+          <input
+            id="username-input"
+            type="text"
+            class="input-field"
+            placeholder="Enter your username"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+          />
+          <div id="checkuser-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <button id="set-user-btn" class="primary-button">
+          <span id="set-user-btn-text">Continue</span>
+          <span id="set-user-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Validating...
+          </span>
+        </button>
+      </div>
+
+      <div class="footer">
+        <p class="footer-text">Enter your username to begin the MFA authentication process</p>
+      </div>
+    </div>
+  </template>
+
+  <!-- Set Password Screen Template (Password Creation) -->
+  <template id="SetPassword-template">
+    <div class="screen-container">
+      <div class="header">
+        <button id="setpwd-close-btn" class="close-button">✕</button>
+        <h1 class="title">Create Password</h1>
+        <p id="setpwd-subtitle" class="subtitle">Create a secure password for your account</p>
+      </div>
+
+      <!-- Status Banner -->
+      <div id="setpwd-status-banner" class="status-banner" style="display: none;"></div>
+
+      <!-- Password Policy Display -->
+      <div id="password-policy-card" class="card info-card" style="display: none;">
+        <h3 class="info-card-title">Password Requirements</h3>
+        <p id="password-policy-text" class="info-card-text"></p>
+      </div>
+
+      <div class="card form-card">
+        <div class="input-container">
+          <label class="input-label">Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="password-input"
+              type="password"
+              class="input-field"
+              placeholder="Enter password"
+              autocomplete="new-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+          <div id="password-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <div class="input-container">
+          <label class="input-label">Confirm Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="confirm-password-input"
+              type="password"
+              class="input-field"
+              placeholder="Confirm password"
+              autocomplete="new-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-confirm-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+        </div>
+
+        <button id="set-password-btn" class="primary-button">
+          <span id="set-password-btn-text">Create Password</span>
+          <span id="set-password-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Submitting...
+          </span>
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <!-- Verify Password Screen Template (Password Verification) -->
+  <template id="VerifyPassword-template">
+    <div class="screen-container">
+      <div class="header">
+        <button id="verifypwd-close-btn" class="close-button">✕</button>
+        <h1 class="title">Verify Password</h1>
+        <p id="verifypwd-subtitle" class="subtitle">Enter your password to continue</p>
+      </div>
+
+      <!-- Status Banner -->
+      <div id="verifypwd-status-banner" class="status-banner" style="display: none;"></div>
+
+      <div class="card form-card">
+        <div class="input-container">
+          <label class="input-label">Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="verify-password-input"
+              type="password"
+              class="input-field"
+              placeholder="Enter password"
+              autocomplete="current-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-verify-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+          <div id="verifypwd-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <div id="verifypwd-attempts" class="attempts-info" style="display: none;">
+          <span>Attempts remaining: <strong id="verifypwd-attempts-count">-</strong></span>
+        </div>
+
+        <button id="verify-password-btn" class="primary-button">
+          <span id="verify-password-btn-text">Verify</span>
+          <span id="verify-password-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Verifying...
+          </span>
+        </button>
+
+        <!-- FORGOT PASSWORD LINK (shown when challengeMode=0 and ENABLE_FORGOT_PASSWORD=true) -->
+        <div id="forgot-password-container" class="forgot-password-container" style="display: none;">
+          <a href="#" id="forgot-password-link" class="forgot-password-link">
+            <span id="forgot-password-text">Forgot Password?</span>
+            <span id="forgot-password-loader" class="forgot-password-loader" style="display: none;">
+              <span class="spinner-small"></span>
+              <span style="margin-left: 8px;">Initiating password reset...</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="help-container">
+          <p class="help-text">
+            Enter your password to verify your identity and continue.
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Update Expiry Password Screen Template (Password Expiry Flow) -->
+  <template id="UpdateExpiryPassword-template">
+    <div class="screen-container">
+      <!-- Header (blue background like VerifyPassword) -->
+      <div class="header">
+        <button id="update-expiry-close-btn" class="close-button">✕</button>
+        <h1 id="update-expiry-title" class="title">Update Expired Password</h1>
+        <p id="update-expiry-subtitle" class="subtitle">Password has expired. Please contact the admin.</p>
+      </div>
+
+      <!-- Status Banner (for errors) -->
+      <div id="update-expiry-status-banner" class="status-banner" style="display: none;"></div>
+
+      <!-- Welcome User Banner (centered, two lines) -->
+      <div id="update-expiry-welcome-banner" class="welcome-banner" style="display: none;">
+        <p class="welcome-text">Welcome</p>
+        <p id="update-expiry-username" class="welcome-username"></p>
+      </div>
+
+      <!-- Password Policy Display (use same as SetPassword) -->
+      <div id="update-expiry-policy-container" class="card info-card" style="display: none;">
+        <h3 class="info-card-title">Password Requirements</h3>
+        <p id="update-expiry-policy-text" class="info-card-text"></p>
+      </div>
+
+      <div class="card form-card">
+        <!-- Attempts Counter -->
+        <div id="update-expiry-attempts-container" class="attempts-info">
+          <span>Attempts remaining: <strong id="update-expiry-attempts-left">3</strong></span>
+        </div>
+
+        <!-- Current Password Input -->
+        <div class="input-container">
+          <label class="input-label">Current Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="update-expiry-current-password"
+              type="password"
+              class="input-field"
+              placeholder="Enter current password"
+              autocomplete="current-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-current-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+          <div id="update-expiry-current-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <!-- New Password Input -->
+        <div class="input-container">
+          <label class="input-label">New Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="update-expiry-new-password"
+              type="password"
+              class="input-field"
+              placeholder="Enter new password"
+              autocomplete="new-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-new-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+          <div id="update-expiry-new-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <!-- Confirm New Password Input -->
+        <div class="input-container">
+          <label class="input-label">Confirm New Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="update-expiry-confirm-password"
+              type="password"
+              class="input-field"
+              placeholder="Confirm new password"
+              autocomplete="new-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-confirm-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+          <div id="update-expiry-confirm-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="update-expiry-password-btn" class="primary-button">
+          <span id="update-expiry-password-btn-text">Update Password</span>
+          <span id="update-expiry-password-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Updating...
+          </span>
+        </button>
+
+        <!-- Help Text -->
+        <div class="help-container">
+          <p class="help-text">
+            Your password has expired. Please update it with a new password that meets the requirements above.
+            Your new password must be different from your current password.
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Activation Code Screen Template (OTP Input) -->
+  <template id="ActivationCode-template">
+    <div class="screen-container">
+      <div class="header">
+        <button id="activationcode-close-btn" class="close-button">✕</button>
+        <h1 class="title">Enter Activation Code</h1>
+        <p id="activation-subtitle" class="subtitle">Enter the activation code sent to you</p>
+      </div>
+
+      <!-- Status Banner -->
+      <div id="activation-status-banner" class="status-banner" style="display: none;"></div>
+
+      <div class="card form-card">
+        <div class="input-container">
+          <label class="input-label">Activation Code</label>
+          <input
+            id="activation-code-input"
+            type="text"
+            class="input-field"
+            placeholder="Enter activation code"
+            autocomplete="one-time-code"
+            autocapitalize="off"
+            autocorrect="off"
+          />
+          <div id="activation-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <div id="activation-attempts" class="attempts-info" style="display: none;">
+          <span>Attempts remaining: <strong id="activation-attempts-count">-</strong></span>
+        </div>
+
+        <button id="verify-code-btn" class="primary-button">
+          <span id="verify-code-btn-text">Verify Code</span>
+          <span id="verify-code-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Verifying...
+          </span>
+        </button>
+
+        <button id="resend-code-btn" class="secondary-button">
+          <span id="resend-code-btn-text">Resend Code</span>
+          <span id="resend-code-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Sending...
+          </span>
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <!-- User LDA Consent Screen Template (Biometric Consent) -->
+  <template id="UserLDAConsent-template">
+    <div class="screen-container">
+      <div class="header">
+        <button id="lda-close-btn" class="close-button">✕</button>
+        <h1 class="title">Biometric Authentication</h1>
+        <p id="lda-subtitle" class="subtitle">Grant permission for secure device authentication</p>
+      </div>
+
+      <!-- Status Banner -->
+      <div id="lda-status-banner" class="status-banner" style="display: none;"></div>
+
+      <div class="card info-card">
+        <h3 class="info-card-title">What is Local Device Authentication?</h3>
+        <p class="info-card-text">
+          Local Device Authentication (LDA) allows you to use your device's biometric features
+          (fingerprint, face recognition) or device passcode for quick and secure authentication.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 id="lda-auth-type-title" class="card-title">Available Authentication</h3>
+        <p id="lda-auth-type-desc" class="auth-type-description">
+          Your device supports secure authentication methods.
+        </p>
+
+        <div class="consent-info">
+          <p id="lda-user-info" class="user-info-text">User: <strong id="lda-username">-</strong></p>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button id="approve-lda-btn" class="primary-button success-button">
+          <span id="approve-lda-btn-text">Enable Biometric</span>
+          <span id="approve-lda-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Processing...
+          </span>
+        </button>
+
+        <button id="reject-lda-btn" class="secondary-button">
+          <span id="reject-lda-btn-text">Skip for Now</span>
+          <span id="reject-lda-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Processing...
+          </span>
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <!-- Dashboard Screen Template (Post-Login) -->
+  <template id="Dashboard-template">
+    <div class="screen-container">
+      <!-- Header with Menu Button -->
+      <div class="dashboard-header">
+        <button id="dashboard-menu-btn" class="menu-button">☰</button>
+        <h2 class="dashboard-title">Dashboard</h2>
+        <div class="header-spacer"></div>
+      </div>
+
+      <div class="dashboard-content">
+        <!-- Welcome Section -->
+        <div class="welcome-container">
+          <h1 class="welcome-title">Welcome!</h1>
+          <p class="welcome-subtitle">You have successfully logged in</p>
+          <div class="user-info-container">
+            <span class="user-info-label">User:</span>
+            <span id="dashboard-username" class="user-info-value">-</span>
+          </div>
+        </div>
+
+        <!-- Session Information -->
+        <div class="card">
+          <h2 class="card-title">Session Information</h2>
+
+          <div class="info-row">
+            <span class="info-label">Session ID:</span>
+            <span id="dashboard-session-id" class="info-value session-id">-</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Session Type:</span>
+            <span id="dashboard-session-type" class="info-value">-</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Login Time:</span>
+            <span id="dashboard-login-time" class="info-value">-</span>
+          </div>
+        </div>
+
+        <!-- JWT Information -->
+        <div id="jwt-info-card" class="card" style="display: none;">
+          <h2 class="card-title">Authentication Tokens</h2>
+
+          <div class="info-row">
+            <span class="info-label">Access Token:</span>
+            <span id="jwt-access-token" class="info-value">-</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Token Type:</span>
+            <span id="jwt-token-type" class="info-value">-</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Expires In:</span>
+            <span id="jwt-expires-in" class="info-value">-</span>
+          </div>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-container">
+          <p class="success-text">
+            Authentication completed successfully! Your session is now active and you can access all application features.
+          </p>
+        </div>
+
+        <!-- Drawer Menu Info -->
+        <div class="card info-card" style="margin-top: 16px;">
+          <h3 class="info-card-title">Navigation</h3>
+          <p class="info-card-text">
+            Tap the menu button (☰) in the top-left corner to access navigation options and logout.
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Verify Auth Screen Template (NEW - Device Activation) -->
+  <template id="VerifyAuth-template">
+    <div class="screen-container">
+      <!-- Close Button (matches React Native) -->
+      <button id="verify-auth-close-btn" class="close-button">✕</button>
+
+      <div class="content">
+        <!-- Title and Subtitle -->
+        <h1 id="verify-auth-title" class="title">Device Activation</h1>
+        <p id="verify-auth-subtitle" class="subtitle">Verify this device to continue</p>
+
+        <!-- Error Display (conditional) -->
+        <div id="verify-auth-error" class="error-banner" style="display: none;"></div>
+
+        <!-- Processing Status (conditional) -->
+        <div id="verify-auth-processing" class="info-banner" style="display: none;">
+          <p class="banner-text">Processing device activation...</p>
+        </div>
+
+        <!-- Activation Information (shown when data available) -->
+        <div id="verify-auth-content">
+          <!-- REL-ID Verify Message -->
+          <div class="message-container">
+            <h3 class="message-title">REL-ID Verify Authentication</h3>
+            <p class="message-text">
+              REL-ID Verify notification has been sent to your registered devices. Please approve it to activate this device.
+            </p>
+          </div>
+
+          <!-- Fallback Option -->
+          <div class="fallback-container">
+            <h3 class="fallback-title">Device Not Handy?</h3>
+            <p class="fallback-description">
+              If you don't have access to your registered devices, you can use an alternative activation method.
+            </p>
+            <button id="fallback-activation-btn" class="outline-button">
+              Activate using fallback method
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Get Notifications Screen Template (NEW - Notification Management) -->
+  <template id="GetNotifications-template">
+    <div class="screen-container">
+      <!-- Header with Menu and Refresh (React Native style) -->
+      <div class="notifications-header">
+        <button id="notifications-menu-btn" class="header-icon-btn">☰</button>
+        <h1 class="header-title">Notifications</h1>
+        <button id="notifications-back-btn" class="header-icon-btn refresh-btn">🔄</button>
+      </div>
+
+      <div id="notifications-error" class="error-message" style="display: none;"></div>
+      <div id="notifications-loading" class="loading-indicator" style="display: none;">Loading notifications...</div>
+
+      <div class="content">
+        <div id="notifications-list" class="notifications-list">
+          <!-- Notifications rendered here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Action Modal (React Native style - stacked action buttons) -->
+    <div id="notification-action-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h2 id="notification-modal-title" class="modal-title">Notification Actions</h2>
+          <button id="notification-modal-close" class="modal-close-btn">✕</button>
+        </div>
+
+        <div id="notification-modal-body" class="modal-body">
+          <!-- Notification details and action buttons rendered here by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- ========== UPDATE PASSWORD SCREEN TEMPLATE ========== -->
+  <template id="UpdatePassword-template">
+    <div class="screen-container">
+      <!-- Header (blue background with close button - matches expiry screen) -->
+      <div class="header">
+        <button id="update-password-close-btn" class="close-button">✕</button>
+        <h1 id="update-password-title" class="title">Update Password</h1>
+        <p id="update-password-subtitle" class="subtitle">Update your account password</p>
+      </div>
+
+      <!-- Status Banner (for general errors) -->
+      <div id="update-password-status-banner" class="status-banner" style="display: none;"></div>
+
+      <!-- Welcome User Banner (centered, two lines) -->
+      <div id="update-password-welcome-banner" class="welcome-banner" style="display: none;">
+        <p class="welcome-text">Welcome</p>
+        <p id="update-password-username" class="welcome-username"></p>
+      </div>
+
+      <!-- Password Policy Display (blue card - matches expiry screen) -->
+      <div id="update-password-policy-container" class="card info-card" style="display: none;">
+        <h3 class="info-card-title">Password Requirements</h3>
+        <p id="update-password-policy-text" class="info-card-text"></p>
+      </div>
+
+      <div class="card form-card">
+        <!-- Attempts Counter -->
+        <div id="update-password-attempts-container" class="attempts-info">
+          <span>Attempts remaining: <strong id="update-password-attempts-left">3</strong></span>
+        </div>
+
+        <!-- Current Password Input with inline error -->
+        <div class="input-container">
+          <label class="input-label">Current Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="current-password-input"
+              type="password"
+              class="input-field"
+              placeholder="Enter current password"
+              autocomplete="current-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-current-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+          <div id="update-password-current-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <!-- New Password Input with inline error -->
+        <div class="input-container">
+          <label class="input-label">New Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="new-password-input"
+              type="password"
+              class="input-field"
+              placeholder="Enter new password"
+              autocomplete="new-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-new-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+          <div id="update-password-new-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <!-- Confirm New Password Input with inline error -->
+        <div class="input-container">
+          <label class="input-label">Confirm New Password</label>
+          <div class="password-input-wrapper">
+            <input
+              id="confirm-password-input"
+              type="password"
+              class="input-field"
+              placeholder="Confirm new password"
+              autocomplete="new-password"
+              autocapitalize="off"
+              autocorrect="off"
+            />
+            <button id="toggle-confirm-password-btn" class="toggle-password-btn" type="button">👁</button>
+          </div>
+          <div id="update-password-confirm-error" class="error-text" style="display: none;"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="update-password-submit-btn" class="primary-button">
+          <span id="update-password-btn-text">Update Password</span>
+          <span id="update-password-btn-loader" class="button-loader" style="display: none;">
+            <span class="spinner"></span> Updating...
+          </span>
+        </button>
+
+        <!-- Help Text -->
+        <div class="help-container">
+          <p class="help-text">
+            Update your password. Your new password must be different from your current password and meet the requirements above.
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- ========== LDA TOGGLING TEMPLATE ========== -->
+  <template id="LDAToggling-template">
+    <div class="screen-container">
+      <!-- Header with menu button and refresh -->
+      <div class="lda-header">
+        <button id="lda-menu-button" class="lda-menu-button">☰</button>
+        <h1 class="lda-header-title">LDA Toggling</h1>
+        <button id="lda-refresh-button" class="lda-refresh-icon-button">🔄</button>
+      </div>
+
+      <!-- Main Content Container (dynamic) -->
+      <div id="lda-content-container" class="lda-container">
+        <!-- Content will be dynamically rendered by LDATogglingScreen.js -->
+        <!-- Loading, error, empty state, or list will be inserted here -->
+      </div>
+    </div>
+  </template>
+
+  <!-- ========== DATA SIGNING TEMPLATES ========== -->
+
+  <!-- Data Signing Input Screen Template -->
+  <template id="DataSigningInput-template">
+    <div class="screen-container data-signing-input-screen">
+      <!-- Header with menu button -->
+      <div class="screen-header-with-menu">
+        <button id="data-signing-menu-button" class="menu-button">☰</button>
+        <div class="screen-header-content">
+          <h2 class="screen-title">Data Signing</h2>
+          <p class="screen-subtitle">Sign your data with cryptographic authentication</p>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <p class="info-title">How it works:</p>
+        <p class="info-text">
+          1. Enter your data payload and select authentication parameters<br>
+          2. Click "Sign Data" to initiate the signing process<br>
+          3. Complete authentication when prompted<br>
+          4. Receive your cryptographically signed data
+        </p>
+      </div>
+
+      <div id="data-signing-error" class="error-banner" style="display: none;"></div>
+
+      <div class="form-container">
+        <div class="form-group">
+          <label class="form-label">Data Payload *</label>
+          <textarea id="data-signing-payload" class="form-textarea" placeholder="Enter the data you want to sign..." maxlength="500" rows="4"></textarea>
+          <div class="char-count" id="data-signing-payload-count">0/500</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Authentication Level *</label>
+          <select id="data-signing-auth-level" class="form-select">
+            <option value="">Select Authentication Level</option>
+          </select>
+          <p class="help-text">Level 4 is recommended for maximum security</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Authenticator Type *</label>
+          <select id="data-signing-authenticator-type" class="form-select">
+            <option value="">Select Authenticator Type</option>
+          </select>
+          <p class="help-text">Choose the authentication method for signing</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Signing Reason *</label>
+          <input type="text" id="data-signing-reason" class="form-input" placeholder="Enter reason for signing" maxlength="100">
+          <div class="char-count" id="data-signing-reason-count">0/100</div>
+        </div>
+
+        <button id="data-signing-submit-btn" class="btn-primary">Sign Data</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- Data Signing Result Screen Template -->
+  <template id="DataSigningResult-template">
+    <div class="screen-container data-signing-result-screen">
+      <div id="data-signing-results-container" class="results-container">
+        <!-- Results will be dynamically inserted here -->
+      </div>
+
+      <div class="actions-section">
+        <button id="data-signing-sign-another-btn" class="btn-primary">🔒 Sign Another Document</button>
+      </div>
+
+      <div class="security-info">
+        <div class="security-info-header">
+          <span class="security-info-icon">🛡️</span>
+          <span class="security-info-title">Security Information</span>
+        </div>
+        <ul class="security-info-list">
+          <li>Your signature is cryptographically secure and tamper-proof</li>
+          <li>The signature ID uniquely identifies this signing operation</li>
+          <li>Data integrity is mathematically guaranteed</li>
+          <li>This signature can be verified independently</li>
+        </ul>
+      </div>
+    </div>
+  </template>
+
+  <!-- Data Signing Password Modal (persistent in DOM) -->
+  <div id="data-signing-password-modal" class="data-signing-modal-overlay" style="display: none;">
+    <div id="data-signing-modal-content" class="data-signing-modal-container">
+      <!-- Modal content will be rendered dynamically by PasswordChallengeModal.js -->
+    </div>
+  </div>
+
+  <!-- ========== ALL SCRIPTS (loaded once, persist forever) ========== -->
+
+  <!-- Cordova -->
+  <script type="text/javascript" src="cordova.js"></script>
+
+  <!-- Utilities -->
+  <script type="text/javascript" src="src/uniken/utils/platformHelper.js"></script>
+  <script type="text/javascript" src="src/uniken/utils/connectionProfileParser.js"></script>
+  <script type="text/javascript" src="src/uniken/utils/progressHelper.js"></script>
+  <script type="text/javascript" src="src/uniken/utils/passwordPolicyUtils.js"></script>
+
+  <!-- Services -->
+  <script type="text/javascript" src="src/uniken/services/rdnaService.js"></script>
+  <script type="text/javascript" src="src/uniken/services/rdnaEventManager.js"></script>
+  <script type="text/javascript" src="src/uniken/services/pushNotificationService.js"></script>
+
+  <!-- MTD Components -->
+  <script type="text/javascript" src="src/uniken/components/modals/ThreatDetectionModal.js"></script>
+  <script type="text/javascript" src="src/uniken/MTDContext/MTDThreatManager.js"></script>
+
+  <!-- Session Management Components -->
+  <script type="text/javascript" src="src/uniken/components/modals/SessionModal.js"></script>
+  <script type="text/javascript" src="src/uniken/SessionContext/SessionManager.js"></script>
+
+  <!-- Step-Up Authentication Components -->
+  <script type="text/javascript" src="src/uniken/components/modals/StepUpPasswordDialog.js"></script>
+  <script type="text/javascript" src="src/uniken/managers/StepUpAuthManager.js"></script>
+
+  <!-- Data Signing Authentication Manager -->
+  <script type="text/javascript" src="src/uniken/managers/DataSigningSetupAuthManager.js"></script>
+
+  <!-- LDA Toggling Components -->
+  <script type="text/javascript" src="src/tutorial/screens/lda-toggling/LDAToggleAuthDialog.js"></script>
+
+  <!-- Providers -->
+  <script type="text/javascript" src="src/uniken/providers/SDKEventProvider.js"></script>
+  <script type="text/javascript" src="src/uniken/providers/PushNotificationProvider.js"></script>
+
+  <!-- App Initializer (handles SDK handler registration) -->
+  <script type="text/javascript" src="src/uniken/AppInitializer.js"></script>
+
+  <!-- Navigation -->
+  <script type="text/javascript" src="src/tutorial/navigation/NavigationService.js"></script>
+
+  <!-- All Screen Scripts (loaded upfront in SPA) -->
+  <!-- Tutorial Screens -->
+  <script type="text/javascript" src="src/tutorial/screens/tutorial/TutorialHomeScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/tutorial/TutorialSuccessScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/tutorial/TutorialErrorScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/tutorial/SecurityExitScreen.js"></script>
+
+  <!-- MFA Screens -->
+  <script type="text/javascript" src="src/tutorial/screens/mfa/CheckUserScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/mfa/SetPasswordScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/mfa/VerifyPasswordScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/mfa/UpdateExpiryPasswordScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/mfa/ActivationCodeScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/mfa/UserLDAConsentScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/mfa/DashboardScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/mfa/VerifyAuthScreen.js"></script>
+
+  <!-- Notification Screens -->
+  <script type="text/javascript" src="src/tutorial/screens/notification/GetNotificationsScreen.js"></script>
+
+  <!-- Password Update Screens -->
+  <script type="text/javascript" src="src/tutorial/screens/updatePassword/UpdatePasswordScreen.js"></script>
+
+  <!-- LDA Toggling Screens -->
+  <script type="text/javascript" src="src/tutorial/screens/lda-toggling/LDATogglingScreen.js"></script>
+
+  <!-- Data Signing Screens and Services -->
+  <script type="text/javascript" src="src/tutorial/screens/dataSigning/DropdownDataService.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/dataSigning/DataSigningService.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/dataSigning/DataSigningInputScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/dataSigning/DataSigningResultScreen.js"></script>
+  <script type="text/javascript" src="src/tutorial/screens/dataSigning/PasswordChallengeModal.js"></script>
+
+  <!-- App Bootstrap (deviceready, calls AppInitializer ONCE) -->
+  <script type="text/javascript" src="js/app.js"></script>
+
+  <!-- Drawer Menu Logic (Password Update Integration) -->
+  <script>
+    /**
+     * Update drawer menu based on available credentials
+     * Called by SDKEventProvider after onCredentialsAvailableForUpdate event
+     */
+    function updateDrawerMenu() {
+      const credentials = SDKEventProvider.getAvailableCredentials();
+      const updatePasswordItem = document.getElementById('drawer-update-password-item');
+
+      if (updatePasswordItem) {
+        if (credentials.includes('Password')) {
+          updatePasswordItem.style.display = 'list-item';
+          console.log('Drawer menu - Update Password item shown');
+        } else {
+          updatePasswordItem.style.display = 'none';
+          console.log('Drawer menu - Update Password item hidden');
+        }
+      }
+    }
+
+    /**
+     * Handle LDA Toggling menu item click
+     * Note: LDA Toggling drawer navigation is handled by each screen's setupEventListeners()
+     * to ensure session params (userID, sessionID) are properly passed
+     */
+
+    /**
+     * Handle Update Password menu item click
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      const updatePasswordLink = document.getElementById('drawer-update-password-link');
+      if (updatePasswordLink) {
+        updatePasswordLink.addEventListener('click', async function(e) {
+          e.preventDefault();
+          console.log('Drawer - Update Password clicked');
+
+          // Close drawer immediately using NavigationService
+          NavigationService.closeDrawer();
+
+          // Show loading state
+          updatePasswordLink.classList.add('loading');
+          updatePasswordLink.textContent = '⏳ Initiating...';
+
+          try {
+            // Call initiateUpdateFlowForCredential API
+            await rdnaService.initiateUpdateFlowForCredential('Password');
+            console.log('Drawer - InitiateUpdateFlowForCredential called successfully');
+            // SDK will trigger getPassword with challengeMode = 2
+            // SDKEventProvider will handle navigation to UpdatePasswordScreen
+          } catch (error) {
+            console.error('Drawer - InitiateUpdateFlowForCredential error:', error);
+            alert('Update Password Error: ' + (error.error?.errorString || 'Failed to initiate password update'));
+          } finally {
+            // Restore button state
+            updatePasswordLink.classList.remove('loading');
+            updatePasswordLink.textContent = '🔑 Update Password';
+          }
+        });
+      }
+    });
+
+    /**
+     * Handle Data Signing menu item click
+     * Note: Data Signing drawer navigation is handled by each screen's setupEventListeners()
+     * to ensure session params (userID, sessionID) are properly passed
+     */
+  </script>
+</body>
+</html>

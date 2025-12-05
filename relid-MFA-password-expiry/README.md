@@ -9,7 +9,7 @@
 
 > **Codelab Advanced:** Master Password Expiry workflows with REL-ID SDK updatePassword API
 
-This folder contains the source code for the solution demonstrating [REL-ID Password Expiry Management](https://developer.uniken.com/docs/password-expiry) using secure expired password update flows with password reuse detection in a Cordova Single Page Application.
+This folder contains the source code for the solution demonstrating [REL-ID Password Expiry Management](https://codelab.uniken.com/codelabs/cordova-password-expiry-flow/index.html?index=..%2F..index#0) using secure expired password update flows with password reuse detection in a Cordova Single Page Application.
 
 ## 🔐 What You'll Learn
 
