@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.relidcodelab" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>relidCodelab</name>
+    <description>Sample Apache Cordova App</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <preference name="deployment-target" value="15.0" />
+    <preference name="android-minSdkVersion" value="23" />
+
+    <!-- Firebase FCM-only Configuration (Official plugin variables) -->
+    <preference name="FIREBASE_ANALYTICS_COLLECTION_ENABLED" value="false" />
+    <preference name="FIREBASE_PERFORMANCE_COLLECTION_ENABLED" value="false" />
+    <preference name="FIREBASE_CRASHLYTICS_COLLECTION_ENABLED" value="false" />
+    <preference name="FIREBASE_FCM_AUTOINIT_ENABLED" value="true" />
+    <preference name="IOS_FCM_ENABLED" value="true" />
+</widget>
