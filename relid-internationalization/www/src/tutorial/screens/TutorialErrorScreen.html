@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Initialization Error</title>
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header error-header">
+            <h1 class="title">Initialization Failed</h1>
+            <p class="subtitle">Error Details</p>
+        </div>
+
+        <!-- Error Summary Card -->
+        <div class="card error-card">
+            <div class="error-header-section">
+                <div class="severity-badge">
+                    <span class="severity-text">ERROR</span>
+                </div>
+                <h2 class="error-title">cordova-plugin-rdna Initialization Error</h2>
+            </div>
+            <div class="error-description">
+                <p class="description-text" id="errorDescription">Loading error details...</p>
+            </div>
+        </div>
+
+        <!-- Error Codes Card -->
+        <div class="card">
+            <h2 class="card-title">Error Codes</h2>
+            <div class="code-container">
+                <div class="code-row">
+                    <span class="code-label">Short Error Code:</span>
+                    <div class="code-value">
+                        <span class="code-text" id="shortErrorCode">-</span>
+                    </div>
+                </div>
+                <div class="code-row">
+                    <span class="code-label">Long Error Code:</span>
+                    <div class="code-value">
+                        <span class="code-text" id="longErrorCode">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Troubleshooting Card -->
+        <div class="card">
+            <h2 class="card-title">Troubleshooting Steps</h2>
+            <div class="troubleshooting-container">
+                <div class="troubleshooting-step">
+                    <div class="step-bullet"></div>
+                    <span class="troubleshooting-text">Check your network connection</span>
+                </div>
+                <div class="troubleshooting-step">
+                    <div class="step-bullet"></div>
+                    <span class="troubleshooting-text">Verify the connection profile configuration</span>
+                </div>
+                <div class="troubleshooting-step">
+                    <div class="step-bullet"></div>
+                    <span class="troubleshooting-text">Ensure the REL-ID server is accessible</span>
+                </div>
+                <div class="troubleshooting-step">
+                    <div class="step-bullet"></div>
+                    <span class="troubleshooting-text">Try restarting the application</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cordova & App Scripts -->
+    <script src="../../../cordova.js"></script>
+    <script src="../navigation/NavigationService.js"></script>
+    <script src="TutorialErrorScreen.js"></script>
+</body>
+</html>

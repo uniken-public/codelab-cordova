@@ -9,6 +9,20 @@
  * @property {number} error.longErrorCode
  * @property {number} error.shortErrorCode
  * @property {string} error.errorString
+ *
+ * @typedef {Object} InitOptions
+ * @property {Object} internationalizationOptions - Language configuration
+ * @property {string} internationalizationOptions.localeCode - ISO 639-1 language code (e.g., 'en', 'ar', 'es'). Empty string defaults to 'en'
+ * @property {string} internationalizationOptions.localeName - Display name for the locale
+ * @property {number} internationalizationOptions.languageDirection - 0 = LTR (Left-to-Right), 1 = RTL (Right-to-Left)
+ * @property {Object} permissionOptions - Permission configuration
+ * @property {boolean} permissionOptions.isLocationPermissionRequired - Whether location permission is needed
+ * @property {boolean} permissionOptions.isLocationPermissionMandatory - If true, SDK fails without permission; if false, works with limited functionality
+ * @property {Object} otelConfig - OpenTelemetry configuration
+ * @property {string} otelConfig.otelHTTPEndpointURL - OpenTelemetry HTTP endpoint URL (empty = disabled)
+ * @property {string} otelConfig.enableEncoding - Encoding format for OTel data
+ * @property {number} otelConfig.disableTrace - 0 = enable tracing, 1 = disable tracing
+ * @property {number} otelConfig.otelTraceFlushTimeout - Timeout in milliseconds for flushing traces
  */
 
 class RdnaService {
@@ -85,10 +99,38 @@ class RdnaService {
   }
 
   /**
-   * Initializes the REL-ID SDK
+   * Initializes the REL-ID SDK with optional advanced configuration
+   *
+   * @param {InitOptions} [initOptions] - Optional configuration for language, permissions, and telemetry
+   *                                       If not provided, uses default values suitable for most applications
    * @returns {Promise<RDNASyncResponse>} Promise that resolves with sync response structure
+   *
+   * Example usage:
+   * ```javascript
+   * // Basic initialization (uses defaults)
+   * await rdnaService.initialize();
+   *
+   * // Advanced initialization with custom configuration
+   * await rdnaService.initialize({
+   *   internationalizationOptions: {
+   *     localeCode: 'ar',
+   *     localeName: 'Arabic',
+   *     languageDirection: 1  // RTL
+   *   },
+   *   permissionOptions: {
+   *     isLocationPermissionRequired: true,
+   *     isLocationPermissionMandatory: false
+   *   },
+   *   otelConfig: {
+   *     otelHTTPEndpointURL: '',
+   *     enableEncoding: '',
+   *     disableTrace: 1,
+   *     otelTraceFlushTimeout: 0
+   *   }
+   * });
+   * ```
    */
-  async initialize() {
+  async initialize(initOptions) {
     // Load connection profile
     const profile = await loadAgentInfo();
     console.log('RdnaService - Loaded connection profile:', JSON.stringify({
@@ -97,13 +139,43 @@ class RdnaService {
       relId: profile.relId.substring(0, 10) + '...',
     }, null, 2));
 
+    // If no initOptions provided, use default values
+    // Default configuration:
+    // - Language: Empty (SDK defaults to 'en'), LTR direction
+    // - Permissions: Location required but not mandatory
+    // - Telemetry: Disabled (disableTrace: 1)
+    const defaultInitOptions = {
+      internationalizationOptions: {
+        localeCode: '',           // Empty string - SDK will default to 'en'
+        localeName: '',
+        languageDirection: 0      // 0 = LTR (Left-to-Right)
+      },
+      permissionOptions: {
+        isLocationPermissionRequired: true,    // Location permission is requested
+        isLocationPermissionMandatory: false   // But SDK can work without it
+      },
+      otelConfig: {
+        otelHTTPEndpointURL: '',
+        enableEncoding: '',
+        disableTrace: 1,                       // Tracing disabled by default
+        otelTraceFlushTimeout: 0
+      }
+    };
+
+    // Use provided options or defaults
+    const finalInitOptions = initOptions || defaultInitOptions;
+
+    // Convert to JSON string as required by the SDK
+    const initOptionsString = JSON.stringify(finalInitOptions);
+
     console.log('RdnaService - Starting initialization');
+    console.log('RdnaService - InitOptions:', initOptionsString);
 
     return new Promise((resolve, reject) => {
       com.uniken.rdnaplugin.RdnaClient.initialize(
         (response) => {
           console.log('RdnaService - Initialize sync callback received');
-          
+
             // Plugin returns JSON string - must parse
           const result = JSON.parse(response);
           console.log('RdnaService - Initialize sync response:', JSON.stringify({
@@ -131,7 +203,8 @@ class RdnaService {
           '',                                                         // 4: cipherSalt - Cryptographic salt
           '',                                                         // 5: proxySettings - Proxy configuration (JSON string, optional)
           '',                                                         // 6: sslCertificate - SSL certificate configuration (optional)
-          com.uniken.rdnaplugin.RdnaClient.RDNALoggingLevel.RDNA_NO_LOGS  // 7: logLevel - Logging level 
+          com.uniken.rdnaplugin.RdnaClient.RDNALoggingLevel.RDNA_NO_LOGS,  // 7: logLevel - Logging level
+          initOptionsString                                           // 8: initOptions - Advanced SDK configuration (JSON string)
         ]
       );
     });

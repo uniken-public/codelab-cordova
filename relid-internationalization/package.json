@@ -1,0 +1,51 @@
+{
+  "name": "com.relidcodelab",
+  "displayName": "relidCodelab",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cordova-android": "^14.0.1",
+    "cordova-ios": "^7.1.1",
+    "cordova-plugin-file": "^8.1.3",
+    "cordova-plugin-firebasex": "^19.0.1",
+    "cordova-plugin-rdna": "file:RdnaClient"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-rdna": {
+        "FACEID_USAGE_DESCRIPTION": "Enabling Face ID allows you quick and secure access to your account.",
+        "LOCAL_NETWORK_USAGE_DESCRIPTION": "${PRODUCT_NAME} will verify the endpoint to which the application is connected.",
+        "LOCATION_WHEN_IN_USE_USAGE_DESCRIPTION": "We employ the device's location to secure the app and provide a smooth and seamless experience."
+      },
+      "cordova-plugin-file": {},
+      "cordova-plugin-firebasex": {
+        "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "false",
+        "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "false",
+        "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "false",
+        "FIREBASE_FCM_AUTOINIT_ENABLED": "true",
+        "FIREBASE_ANALYTICS_WITHOUT_ADS": "false",
+        "FIREBASE_MESSAGING_IMMEDIATE_PAYLOAD_DELIVERY": "false",
+        "GOOGLE_ANALYTICS_ADID_COLLECTION_ENABLED": "false",
+        "GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE": "false",
+        "GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE": "false",
+        "GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA": "false",
+        "GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS": "false",
+        "IOS_USE_PRECOMPILED_FIRESTORE_POD": "false",
+        "IOS_FCM_ENABLED": "true"
+      }
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  }
+}

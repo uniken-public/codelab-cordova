@@ -145,8 +145,61 @@ const TutorialHomeScreen = {
     this.updateButtonState(true);
     this.showProgress('Starting RDNA initialization...');
 
-    // Call rdnaService.initialize()
-    rdnaService.initialize()
+    // ========================================
+    // CONFIGURE SDK INITIALIZATION OPTIONS
+    // ========================================
+    // Customers: Customize this section based on your application requirements
+    // If you don't provide initOptions, the SDK will use default values
+
+    // OPTION 1: Use default configuration (recommended for most apps)
+    // Simply call: rdnaService.initialize()
+    // This uses: localeCode='en', languageDirection=LTR, location required but not mandatory, telemetry disabled
+
+    // OPTION 2: Customize configuration for your app needs
+    // Example scenarios:
+
+    // Scenario A: Arabic/RTL language support
+    // const language = 'ar';  // Get from your i18n library (e.g., i18next.language, localStorage, device settings)
+    // const languageDirection = ['ar', 'he', 'fa', 'ur'].includes(language) ? 1 : 0;
+
+    // Scenario B: English/LTR language support (default)
+    const language = 'en';  // TODO: Replace with dynamic language from your app's i18n system
+    const languageDirection = 0;  // 0 = LTR (Left-to-Right), 1 = RTL (Right-to-Left)
+
+    // Scenario C: Location permission configuration
+    // Set based on your app's requirements for location-based risk analysis
+    const requireLocationPermission = true;   // Does your app need location for fraud detection?
+    const locationIsMandatory = false;        // If false, SDK works with limited functionality without location
+
+    // Scenario D: OpenTelemetry (OTel) configuration
+    // Enable only if your organization uses OpenTelemetry for distributed tracing
+    const enableTelemetry = false;  // Set to true for enterprise monitoring and observability
+
+    // Build the initOptions configuration object
+    const initOptions = {
+      internationalizationOptions: {
+        localeCode: language,               // ISO 639-1 code: 'en', 'ar', 'es', 'fr', etc. (empty string defaults to 'en')
+        localeName: language,                // Display name for the locale
+        languageDirection: languageDirection // 0 = LTR, 1 = RTL
+      },
+      permissionOptions: {
+        isLocationPermissionRequired: requireLocationPermission,
+        isLocationPermissionMandatory: locationIsMandatory
+      },
+      otelConfig: {
+        otelHTTPEndpointURL: enableTelemetry ? 'https://your-otel-collector.example.com' : '',
+        enableEncoding: '',
+        disableTrace: enableTelemetry ? 0 : 1,  // 0 = enabled, 1 = disabled
+        otelTraceFlushTimeout: 0
+      }
+    };
+
+    console.log('TutorialHomeScreen - Initializing with custom options:', JSON.stringify(initOptions, null, 2));
+
+    // Call rdnaService.initialize() with custom configuration
+    // Pass initOptions to customize SDK behavior
+    // Or call without parameters: rdnaService.initialize() to use defaults
+    rdnaService.initialize(initOptions)
       .then((syncResponse) => {
         console.log('TutorialHomeScreen - RDNA initialization sync response:', JSON.stringify({
           longErrorCode: syncResponse.error?.longErrorCode,
