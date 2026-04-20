@@ -191,16 +191,16 @@ Once the app launches, verify these data signing capabilities:
 | RDNAAuthLevel | RDNAAuthenticatorType | Supported Authentication | Description |
 |---------------|----------------------|-------------------------|-------------|
 | `NONE` (0) | `NONE` (0) | No Authentication | No authentication required - **NOT RECOMMENDED for production** |
-| `RDNA_AUTH_LEVEL_1` (1) | `NONE` (0) | Device biometric, Device passcode, or Password | Priority: Device biometric → Device passcode → Password |
+| `RDNA_AUTH_LEVEL_1` (1) | `NONE` (0) | LDA, Device Passcode, Password | SDK auto-selects from enrolled methods |
 | `RDNA_AUTH_LEVEL_2` (2) | **NOT SUPPORTED** | ❌ **SDK will error out** | Level 2 is not supported for data signing |
-| `RDNA_AUTH_LEVEL_3` (3) | **NOT SUPPORTED** | ❌ **SDK will error out** | Level 3 is not supported for data signing |
-| `RDNA_AUTH_LEVEL_4` (4) | `RDNA_IDV_SERVER_BIOMETRIC` (1) | IDV Server Biometric | **Maximum security** - Any other authenticator type will cause SDK error |
+| `RDNA_AUTH_LEVEL_3` (3) | `RDNA_AUTH_PASS` (2) | REL-ID Manual Password | Standard security with password |
+| `RDNA_AUTH_LEVEL_3` (3) | `RDNA_AUTH_LDA` (3) | REL-ID LDA (Local Device Auth) | Standard biometric signing |
 
-> **🎯 Production Recommendation**: Use `RDNA_AUTH_LEVEL_4` (numeric value 4) with `RDNA_IDV_SERVER_BIOMETRIC` (numeric value 1) for all production data signing operations requiring maximum security.
+> **🎯 Production Recommendation**: Use `RDNA_AUTH_LEVEL_3` (numeric value 3) with `RDNA_AUTH_LDA` (numeric value 3) or `RDNA_AUTH_PASS` (numeric value 2) for production data signing operations requiring user authentication.
 
 ### How to Use AuthLevel and AuthenticatorType
 
-REL-ID data signing supports three authentication modes:
+REL-ID data signing supports multiple authentication modes:
 
 #### **1. No Authentication (Level 0)** - Testing Only
 ```javascript
@@ -218,18 +218,26 @@ authenticatorType: 0 // NONE
 ```
 - **Use Case**: Standard document signing with flexible authentication
 - **Security**: User logs in the same way they logged into the app
-- **Authenticator Priority**: Device biometric → Device passcode → Password
+- **Authenticator Priority**: LDA → Device passcode → Password
 - **Behavior**: REL-ID automatically selects best available authenticator
 
-#### **3. Step-up Authentication (Level 4)** - High-Value Transactions
+#### **3. Password Authentication (Level 3)** - Explicit Password
 ```javascript
-authLevel: 4,        // RDNA_AUTH_LEVEL_4
-authenticatorType: 1 // RDNA_IDV_SERVER_BIOMETRIC
+authLevel: 3,        // RDNA_AUTH_LEVEL_3
+authenticatorType: 2 // RDNA_AUTH_PASS
 ```
-- **Use Case**: High-value transactions, sensitive documents, compliance requirements
-- **Security**: Maximum security with server-side biometric verification
-- **Requirement**: Must use `RDNA_IDV_SERVER_BIOMETRIC` (1) - other types will cause errors
-- **Behavior**: Forces strong biometric authentication regardless of user's enrolled authenticators
+- **Use Case**: Document signing requiring explicit password verification
+- **Security**: User must enter their REL-ID password
+- **Behavior**: Always prompts for password regardless of other enrolled methods
+
+#### **4. LDA Authentication (Level 3)** - Local Device Authentication
+```javascript
+authLevel: 3,        // RDNA_AUTH_LEVEL_3
+authenticatorType: 3 // RDNA_AUTH_LDA
+```
+- **Use Case**: Biometric signing with device biometric sensors
+- **Security**: Uses device Face ID, Touch ID, or Fingerprint
+- **Behavior**: Prompts for device biometric authentication
 
 ## 🎓 Learning Checkpoints
 
